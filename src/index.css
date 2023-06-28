@@ -13,3 +13,26 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+.MuiOutlinedInput-notchedOutline,
+.MuiInputBase-root::before {
+  border-color: white !important;
+  color: white !important;
+}
+.MuiInputBase-root::after {
+  border-color: #f7ff00 !important;
+}
+#name-label,
+#email-label,
+#password-label,
+#contactName-label,
+#contactNumber-label,
+#filter-label,
+.MuiInputBase-input {
+  color: white !important;
+}
+.css-83ijpv-MuiTypography-root {
+  color: white !important;
+}
+.link {
+  color: white;
+}
