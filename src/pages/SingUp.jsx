@@ -9,7 +9,7 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { register } from 'redux/auth/authOperations';
@@ -20,17 +20,17 @@ export const SignUp = () => {
   const [email, setEmail] = useState('');
   const [name, setName] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      await dispatch(register({ name, email, password })).unwrap();
-      toast.success('Welcome');
-      navigate('/contacts');
-    } catch (error) {
-      toast.error('Error Register');
-    }
+    dispatch(register({ name, email, password }))
+      .unwrap()
+      .then(() => {
+        toast.success('Welcome');
+      })
+      .catch(() => {
+        toast.error('Error Register');
+      });
   };
 
   const handleChange = ({ target: { value, name } }) => {

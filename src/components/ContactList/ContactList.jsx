@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectContact, selectFilter } from 'redux/selector';
 import { deleteContact } from 'redux/operations';
 import { List, Button, ListItemText, ListItem, Box } from '@mui/material';
+import { toast } from 'react-hot-toast';
 
 const ContactList = () => {
   const dispatch = useDispatch();
@@ -37,7 +38,15 @@ const ContactList = () => {
               ></ListItemText>
               <Button
                 variant="contained"
-                onClick={() => dispatch(deleteContact(contact.id))}
+                onClick={() =>
+                  dispatch(deleteContact(contact.id))
+                    .then(() => {
+                      toast.success('Contact deleted');
+                    })
+                    .catch(err => {
+                      toast.error('Something went wrong(((');
+                    })
+                }
                 sx={{
                   height: 30,
                   background:

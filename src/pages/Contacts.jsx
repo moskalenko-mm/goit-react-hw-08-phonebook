@@ -21,7 +21,6 @@ export const Contacts = () => {
       container
       maxWidth="false"
       component="main"
-      spacing="50px"
       sx={{
         margin: '0',
         height: '100vh',
@@ -29,7 +28,8 @@ export const Contacts = () => {
         backgroundImage: 'linear-gradient(315deg, #1b2845 0%, #274060 74%)',
         backgroundSize: 'cover',
         backgroundRepeat: 'no-repeat',
-        padding: '20px',
+        padding: '30px',
+        gap: '50px',
       }}
     >
       <Grid item xs md="auto" lg="auto">

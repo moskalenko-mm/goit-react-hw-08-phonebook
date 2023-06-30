@@ -8,6 +8,8 @@ import { Button } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectIsLoggedIn, selectUser } from 'redux/selector';
 import { logout } from 'redux/auth/authOperations';
+import Loader from 'components/Loader/Loader';
+import { Suspense } from 'react';
 
 export const MenuAppBar = () => {
   const user = useSelector(selectUser);
@@ -19,8 +21,8 @@ export const MenuAppBar = () => {
     event.target.textContent === 'Logout' ? dispatch(logout()) : navigate('/');
   };
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1, alignItems: 'center' }}>
+      <AppBar position="static" sx={{ justifyItems: 'center' }}>
         <Toolbar>
           {!isLoggedIn && (
             <Typography
@@ -55,9 +57,9 @@ export const MenuAppBar = () => {
           )}
         </Toolbar>
       </AppBar>
-      <React.Suspense>
+      <Suspense fallback={<Loader />}>
         <Outlet />
-      </React.Suspense>
+      </Suspense>
     </Box>
   );
 };

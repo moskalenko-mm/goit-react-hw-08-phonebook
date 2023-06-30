@@ -31,9 +31,14 @@ const ContactForm = () => {
     if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
       return alert(`Contact "${name}" is already in contacts list`);
     }
-    dispatch(addContact({ name, number }));
-    toast.success('Contact added');
-    form.reset();
+    dispatch(addContact({ name, number }))
+      .then(() => {
+        toast.success('Contact added');
+        form.reset();
+      })
+      .catch(err => {
+        toast.error('Something went wrong(((');
+      });
   };
 
   return (

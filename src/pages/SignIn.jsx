@@ -8,7 +8,7 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -18,17 +18,17 @@ export const SignIn = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleSubmit = async e => {
     e.preventDefault();
-    try {
-      await dispatch(login({ email, password })).unwrap();
-      toast.success('Welcome');
-      navigate('/contacts');
-    } catch (error) {
-      toast.error('Error Login');
-    }
+    dispatch(login({ email, password }))
+      .unwrap()
+      .then(() => {
+        toast.success('Welcome');
+      })
+      .catch(() => {
+        toast.error('Error Login');
+      });
   };
 
   const handleChange = ({ target: { value, name } }) => {
