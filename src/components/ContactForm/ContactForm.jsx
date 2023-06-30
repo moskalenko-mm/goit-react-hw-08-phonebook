@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { nanoid } from 'nanoid';
 import { selectContact } from 'redux/selector';
 import { addContact } from 'redux/operations';
 import { Box, Button, TextField } from '@mui/material';
+import { toast } from 'react-hot-toast';
 
 const ContactForm = () => {
   const dispatch = useDispatch();
@@ -31,7 +31,8 @@ const ContactForm = () => {
     if (contacts.find(item => item.name.toLowerCase() === name.toLowerCase())) {
       return alert(`Contact "${name}" is already in contacts list`);
     }
-    dispatch(addContact({ id: nanoid(), name, phone: number }));
+    dispatch(addContact({ name, number }));
+    toast.success('Contact added');
     form.reset();
   };
 

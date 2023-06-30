@@ -23,7 +23,8 @@ export const Contacts = () => {
       component="main"
       spacing="50px"
       sx={{
-        height: '100%',
+        margin: '0',
+        height: '100vh',
         backgroundColor: '#1b2845',
         backgroundImage: 'linear-gradient(315deg, #1b2845 0%, #274060 74%)',
         backgroundSize: 'cover',
@@ -45,7 +46,7 @@ export const Contacts = () => {
         <Typography component="h2" variant="h5" sx={{ color: 'white' }}>
           Contacts
         </Typography>
-        <Filter />
+        {!isLoading && <Filter />}
         {isLoading && !error && <b>Request in progress...</b>}
         {!isLoading && <ContactList />}
       </Grid>

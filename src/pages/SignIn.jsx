@@ -8,16 +8,31 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { login } from 'redux/auth/authOperations';
 
 export const SignIn = () => {
-  const handleSubmit = event => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      await dispatch(login({ email, password })).unwrap();
+      toast.success('Welcome');
+      navigate('/contacts');
+    } catch (error) {
+      toast.error('Error Login');
+    }
+  };
+
+  const handleChange = ({ target: { value, name } }) => {
+    name === 'email' ? setEmail(value) : setPassword(value);
   };
 
   return (
@@ -67,6 +82,7 @@ export const SignIn = () => {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleChange}
           />
           <TextField
             margin="normal"
@@ -77,6 +93,7 @@ export const SignIn = () => {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleChange}
           />
           <Button
             type="submit"
@@ -86,7 +103,7 @@ export const SignIn = () => {
           >
             Sign In
           </Button>
-          <Link className="link" to="/singUp">
+          <Link className="link" to="/register">
             Don't have an account? Sign Up
           </Link>
         </Box>

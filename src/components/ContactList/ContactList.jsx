@@ -33,7 +33,7 @@ const ContactList = () => {
             >
               <ListItemText
                 primary={contact.name}
-                secondary={contact.phone}
+                secondary={contact.number}
               ></ListItemText>
               <Button
                 variant="contained"

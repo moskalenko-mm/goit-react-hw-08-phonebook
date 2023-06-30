@@ -9,16 +9,36 @@ import {
   Typography,
 } from '@mui/material';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { register } from 'redux/auth/authOperations';
+import { toast } from 'react-hot-toast';
 
 export const SignUp = () => {
-  const handleSubmit = event => {
-    event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+    try {
+      await dispatch(register({ name, email, password })).unwrap();
+      toast.success('Welcome');
+      navigate('/contacts');
+    } catch (error) {
+      toast.error('Error Register');
+    }
+  };
+
+  const handleChange = ({ target: { value, name } }) => {
+    name === 'email'
+      ? setEmail(value)
+      : name === 'password'
+      ? setPassword(value)
+      : setName(value);
   };
 
   return (
@@ -70,6 +90,7 @@ export const SignUp = () => {
                 label="Name"
                 autoFocus
                 sx={{ color: 'white' }}
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -80,6 +101,7 @@ export const SignUp = () => {
                 label="Email Address"
                 name="email"
                 autoComplete="email"
+                onChange={handleChange}
               />
             </Grid>
             <Grid item xs={12}>
@@ -91,6 +113,7 @@ export const SignUp = () => {
                 type="password"
                 id="password"
                 autoComplete="new-password"
+                onChange={handleChange}
               />
             </Grid>
           </Grid>
